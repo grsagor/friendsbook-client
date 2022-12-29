@@ -19,7 +19,6 @@ const Navbar = () => {
                         <li><Link to='/media'>Media</Link></li>
                         <li><Link to='/message'>Message</Link></li>
                         <li><Link to='/about'>About</Link></li>
-                        <li><Link to='/upload'>Upload</Link></li>
                     </React.Fragment>
 
     return (
@@ -36,7 +35,7 @@ const Navbar = () => {
 
                     </ul>
                 </div>
-                <Link to='/' className="btn btn-ghost normal-case text-xl">daisyUI</Link>
+                <Link to='/' className="btn btn-ghost normal-case text-xl">Friendsbook</Link>
             </div>
             <div className="navbar-center hidden lg:flex">
                 <ul className="menu menu-horizontal px-1">
@@ -54,6 +53,7 @@ const Navbar = () => {
                     !user && 
                     <>
                         <Link className='btn' to='/login'>Login</Link>
+                        <Link className='btn ml-1' to='/signup'>Signup</Link>
                     </>
                 }
             </div>

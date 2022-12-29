@@ -5,7 +5,9 @@ import Home from "../../Pages/Home/Home";
 import Upload from "../../Pages/Home/Upload/Upload";
 import Login from "../../Pages/Login/Login";
 import Medias from "../../Pages/Medias/Medias";
+import Details from "../../Pages/Medias/Post/Details/Details";
 import Messages from "../../Pages/Messages/Messages";
+import Signup from "../../Pages/Signup/Signup";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +37,17 @@ const router = createBrowserRouter([
             {
                 path: '/login',
                 element: <Login></Login>
+            },
+            {
+                path: '/signup',
+                element: <Signup></Signup>
+            },
+            {
+                path: '/details/:id',
+                loader: async ({params}) => {
+                    return fetch(`http://localhost:5000/posts?id=${params.id}`)
+                },
+                element: <Details></Details>
             },
         ]
     }
