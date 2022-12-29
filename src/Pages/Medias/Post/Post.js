@@ -8,7 +8,7 @@ const Post = ({singlepost, refetch}) => {
     const { post, img, _id, reactor } = singlepost;
     const { user } = useContext(AuthContext);
 
-    const find = reactor?.find(singleReactor => singleReactor === user.email);
+    const find = reactor?.find(singleReactor => singleReactor === user?.email);
 
     const handleLike = () => {
         if(!find){
@@ -60,7 +60,7 @@ const Post = ({singlepost, refetch}) => {
             }
         }
         if(find){
-                const reactors = reactor?.filter(reactorEmail => reactorEmail!==user.email);
+                const reactors = reactor?.filter(reactorEmail => reactorEmail!==user?.email);
                 const body = {
                     reactor: reactors,
 

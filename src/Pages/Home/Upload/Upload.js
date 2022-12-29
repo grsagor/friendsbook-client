@@ -27,8 +27,8 @@ const Upload = () => {
           data.img = imgData.data.url;
 
           if(user){
-              data.email = user.email;
-              data.displayName = user.displayName;
+              data.email = user?.email;
+              data.displayName = user?.displayName;
           }
 
           fetch('http://localhost:5000/posts', {

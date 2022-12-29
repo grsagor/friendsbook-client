@@ -8,11 +8,12 @@ import Medias from "../../Pages/Medias/Medias";
 import Details from "../../Pages/Medias/Post/Details/Details";
 import Messages from "../../Pages/Messages/Messages";
 import Signup from "../../Pages/Signup/Signup";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
 
 const router = createBrowserRouter([
     {
         path: '/',
-        element: <Main></Main>,
+        element: <PrivateRoute><Main></Main></PrivateRoute>,
         children: [
             {
                 path: '/',
@@ -35,10 +36,6 @@ const router = createBrowserRouter([
                 element: <Messages></Messages>
             },
             {
-                path: '/login',
-                element: <Login></Login>
-            },
-            {
                 path: '/signup',
                 element: <Signup></Signup>
             },
@@ -50,7 +47,11 @@ const router = createBrowserRouter([
                 element: <Details></Details>
             },
         ]
-    }
+    },
+    {
+        path: '/login',
+        element: <Login></Login>
+    },
 ])
 
 export default router;

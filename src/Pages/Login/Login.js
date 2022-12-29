@@ -2,10 +2,12 @@ import { GoogleAuthProvider } from 'firebase/auth';
 import React from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 
 const Login = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const navigate = useNavigate();
 
     const { providerLogin, signIn } = useContext(AuthContext);
 
@@ -14,6 +16,7 @@ const Login = () => {
     const handleLogin = data => {
         signIn(data.email, data.password)
         .then(res => {
+            navigate('/');
             const user = res.user;
             console.log(user);
         })
@@ -25,12 +28,13 @@ const Login = () => {
     const handleGoogleSignIn = () => {
         providerLogin(googleProvider)
             .then(res => {
+                navigate('/', {replace: true});
                 console.log(res.user);
             })
             .catch(error => console.log(error.message))
     }
     return (
-        <div>
+        <div className='w-3/4 mx-auto my-4'>
             <form onSubmit={handleSubmit(handleLogin)}>
 
                 <div className="form-control w-full">
@@ -50,7 +54,7 @@ const Login = () => {
             </form>
 
 
-            <button onClick={handleGoogleSignIn} className='btn btn-outline w-full'>Continue With Google</button>
+            <button onClick={handleGoogleSignIn} className='btn btn-outline w-full my-4'>Continue With Google</button>
         </div>
     );
 };

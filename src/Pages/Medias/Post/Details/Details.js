@@ -14,7 +14,7 @@ const Details = () => {
 
     const { user } = useContext(AuthContext);
 
-    const find = reactor?.find(singleReactor => singleReactor === user.email);
+    const find = reactor?.find(singleReactor => singleReactor === user?.email);
 
     const handleLike = () => {
         if(!find){
@@ -68,7 +68,7 @@ const Details = () => {
             }
         }
         if(find){
-                const reactors = reactor?.filter(reactorEmail => reactorEmail!==user.email);
+                const reactors = reactor?.filter(reactorEmail => reactorEmail!==user?.email);
                 const body = {
                     reactor: reactors,
                     reactCount: reactor.length-1,
