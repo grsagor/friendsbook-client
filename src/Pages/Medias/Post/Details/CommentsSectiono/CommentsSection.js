@@ -9,7 +9,7 @@ const CommentsSection = ({ _id }) => {
     const { data: post = [], refetch } = useQuery({
         queryKey: ['posts'],
         queryFn: async () => {
-            const res = await fetch(`http://localhost:5000/posts?id=${_id}`);
+            const res = await fetch(`https://friendsbook-server.vercel.app/posts?id=${_id}`);
             const data = await res.json();
             return data;
         }
@@ -35,7 +35,7 @@ const CommentsSection = ({ _id }) => {
                 currentComments: newCurrentComments,
                 id: _id
             };
-            fetch(`http://localhost:5000/comments`, {
+            fetch(`https://friendsbook-server.vercel.app/comments`, {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json'
@@ -57,7 +57,7 @@ const CommentsSection = ({ _id }) => {
                 currentComments: newCurrentComments,
                 id: _id
             };
-            fetch(`http://localhost:5000/comments`, {
+            fetch(`https://friendsbook-server.vercel.app/comments`, {
                 method: 'PUT',
                 headers: {
                     'content-type': 'application/json'

@@ -6,7 +6,7 @@ const HomePosts = () => {
     const { data: posts = [], refetch } = useQuery({
         queryKey: ['posts'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/postsinhome');
+            const res = await fetch('https://friendsbook-server.vercel.app/postsinhome');
             const data = await res.json();
             return data;
         }

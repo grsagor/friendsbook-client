@@ -25,7 +25,7 @@ const Details = () => {
                     reactCount: reactor.length+1
                 }
     
-                fetch(`http://localhost:5000/like`, {
+                fetch(`https://friendsbook-server.vercel.app/like`, {
                     method: 'PUT',
                     headers: {
                         'content-type': 'application/json'
@@ -49,7 +49,7 @@ const Details = () => {
                     reactCount: 1
                 }
     
-                fetch(`http://localhost:5000/like`, {
+                fetch(`https://friendsbook-server.vercel.app/like`, {
                     method: 'PUT',
                     headers: {
                         'content-type': 'application/json'
@@ -75,7 +75,7 @@ const Details = () => {
                     id: _id
                 }
     
-                fetch(`http://localhost:5000/like`, {
+                fetch(`https://friendsbook-server.vercel.app/like`, {
                     method: 'PUT',
                     headers: {
                         'content-type': 'application/json'

@@ -2,7 +2,8 @@ import { GoogleAuthProvider } from 'firebase/auth';
 import React from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
+import { useQuery } from 'react-query';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 
 const Login = () => {
@@ -30,11 +31,48 @@ const Login = () => {
             .then(res => {
                 navigate('/', {replace: true});
                 console.log(res.user);
+                saveUsers(res.user);
             })
             .catch(error => console.log(error.message))
     }
+
+    const saveUsers = (data) => {
+
+        fetch(`https://friendsbook-server.vercel.app/users?email=${data.email}`)
+            .then(res=>res.json())
+            .then(users=> {
+              if(users.length >0 ){
+                console.log('User Found')
+                console.log(users.length);
+              }  
+              if(users.length < 1){
+                const user = { 
+                    name: data.displayName,
+                    email: data.email,
+                    university: 'Not Set',
+                    address: 'Not Set',
+                    img: data.photoURL
+                };
+                fetch('https://friendsbook-server.vercel.app/users', {
+                    method: 'POST',
+                    headers: {
+                        'content-type': 'application/json'
+                    },
+                    body: JSON.stringify(user)
+                })
+                    .then(res => res.json())
+                    .then(data => {
+                        console.log(data);
+                    })
+              }
+            })
+        
+        
+    
+    }
     return (
         <div className='w-3/4 mx-auto my-4'>
+            <h2 className='text-3xl'>Please Log In To Visit <span className='text-lime-600 font-semibold'>Friendsbook</span>...</h2>
             <form onSubmit={handleSubmit(handleLogin)}>
 
                 <div className="form-control w-full">
@@ -52,6 +90,8 @@ const Login = () => {
 
                 <input className='btn btn-primary w-full' value='Login' type="submit" />
             </form>
+
+            <p>If you don't have any account, please <Link className='text-lime-600 font-semibold' to='/signup'>Sign Up</Link>.</p>
 
 
             <button onClick={handleGoogleSignIn} className='btn btn-outline w-full my-4'>Continue With Google</button>

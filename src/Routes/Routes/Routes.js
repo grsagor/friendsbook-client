@@ -36,13 +36,9 @@ const router = createBrowserRouter([
                 element: <Messages></Messages>
             },
             {
-                path: '/signup',
-                element: <Signup></Signup>
-            },
-            {
                 path: '/details/:id',
                 loader: async ({params}) => {
-                    return fetch(`http://localhost:5000/posts?id=${params.id}`)
+                    return fetch(`https://friendsbook-server.vercel.app/posts?id=${params.id}`)
                 },
                 element: <Details></Details>
             },
@@ -51,6 +47,10 @@ const router = createBrowserRouter([
     {
         path: '/login',
         element: <Login></Login>
+    },
+    {
+        path: '/signup',
+        element: <Signup></Signup>
     },
 ])
 

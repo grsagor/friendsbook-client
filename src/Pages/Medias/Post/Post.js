@@ -1,12 +1,18 @@
 import React from 'react';
+import { useState } from 'react';
+import { useEffect } from 'react';
 import { useContext } from 'react';
+import { useQuery } from 'react-query';
 import { Link } from 'react-router-dom';
 // import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../../context/AuthProvider';
 
 const Post = ({singlepost, refetch}) => {
-    const { post, img, _id, reactor } = singlepost;
+    const { post, img, _id, reactor, displayName } = singlepost;
     const { user } = useContext(AuthContext);
+
+
+
 
     const find = reactor?.find(singleReactor => singleReactor === user?.email);
 
@@ -19,7 +25,7 @@ const Post = ({singlepost, refetch}) => {
                     reactCount: reactor.length+1
                 }
     
-                fetch(`http://localhost:5000/like`, {
+                fetch(`https://friendsbook-server.vercel.app/like`, {
                     method: 'PUT',
                     headers: {
                         'content-type': 'application/json'
@@ -42,7 +48,7 @@ const Post = ({singlepost, refetch}) => {
                     reactCount: 1
                 }
     
-                fetch(`http://localhost:5000/like`, {
+                fetch(`https://friendsbook-server.vercel.app/like`, {
                     method: 'PUT',
                     headers: {
                         'content-type': 'application/json'
@@ -67,7 +73,7 @@ const Post = ({singlepost, refetch}) => {
                     id: _id
                 }
     
-                fetch(`http://localhost:5000/like`, {
+                fetch(`https://friendsbook-server.vercel.app/like`, {
                     method: 'PUT',
                     headers: {
                         'content-type': 'application/json'
@@ -89,15 +95,15 @@ const Post = ({singlepost, refetch}) => {
     }
 
     return (
-        <div className="card w-1/4 mx-auto bg-base-100 shadow-xl">
+        <div className="card w-1/4 mx-auto bg-base-100 shadow-xl my-4 p-4">
                 <div className="card-body">
-                    <h2 className="card-title">Shoes!</h2>
-                    <p>{post}</p>
+                    <h2 className="card-title">{displayName}</h2>
+                    <p className='text-left'>{post}</p>
                 </div>
                 <figure><img src={img} alt="Shoes" /></figure>
-                <div className='flex'>
-                    <div className={`w-1/2 ${find ? 'text-red-600' : ''}`}><button onClick={handleLike} className='w-full border border-black'>Like</button></div>
-                    <div className='w-1/2'><Link to={`/details/${_id}`}><button className='w-full border border-black'>Details</button></Link></div>
+                <div className='flex my-4'>
+                    <div className={`w-1/2 ${find ? 'bg-lime-600 text-white' : 'text-lime-600'} rounded-lg`}><button onClick={handleLike} className='w-full border border-lime-600 rounded-lg'>Like</button></div>
+                    <div className='w-1/2'><Link to={`/details/${_id}`}><button className='w-full border border-lime-600 rounded-lg text-lime-600'>Details</button></Link></div>
                 </div>
         </div>
     );

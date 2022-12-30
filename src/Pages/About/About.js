@@ -15,7 +15,7 @@ const About = () => {
             address: data.address
         }
 
-        fetch(`http://localhost:5000/users`, {
+        fetch(`https://friendsbook-server.vercel.app/users`, {
                     method: 'PUT',
                     headers: {
                         'content-type': 'application/json'
@@ -36,23 +36,35 @@ const About = () => {
         <div>
             <div className='text-left w-1/4 mx-auto'>
                 <div>
-                    <span>Name</span><br />
+                    <div className='flex justify-between font-bold'>
+                        <div><span>Name</span><br /></div>
+                        <div><button>Edit</button></div>
+                    </div>
                     <span>{user?.displayName}</span>
                 </div>
                 <div>
-                    <span>Email</span><br />
+                    <div className='flex justify-between font-bold'>
+                        <div><span>Email</span><br /></div>
+                        <div><button>Edit</button></div>
+                    </div>
                     <span>{user?.email}</span>
                 </div>
-                {/* <div>
-                    <span>University</span><br />
-                    <span>{varsity}</span>
+                <div>
+                <div className='flex justify-between font-bold'>
+                        <div><span>University</span><br /></div>
+                        <div><button>Edit</button></div>
+                    </div>
+                    <span>Not Set</span>
                 </div>
                 <div>
-                    <span>Address</span><br />
-                    <span>{address}</span>
-                </div> */}
+                <div className='flex justify-between font-bold'>
+                        <div><span>Address</span><br /></div>
+                        <div><button>Edit</button></div>
+                    </div>
+                    <span>Not Set</span>
+                </div>
             </div>
-            <div>
+            <div className='hidden'>
                 <form onSubmit={handleSubmit(handleAbout)}>
 
                     <div className="form-control w-full">
@@ -67,7 +79,7 @@ const About = () => {
                         {errors.email && <p className='text-error'>{errors.email?.message}</p>}
                     </div>
 
-                    <input className='btn btn-primary w-full' value='Post' type="submit" />
+                    <input className='btn btn-primary w-full' value='Update' type="submit" />
                 </form>
             </div>
         </div>

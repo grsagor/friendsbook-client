@@ -2,10 +2,12 @@ import React from 'react';
 import { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
+import { Link } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthProvider';
 
 const Signup = () => {
     const { register, handleSubmit, formState: { errors } } = useForm();
+    const imageHostKey = process.env.REACT_APP_imgbb_key;    
 
     const { createUser, updateUser } = useContext(AuthContext);
 
@@ -21,7 +23,7 @@ const Signup = () => {
                 }
                 updateUser(userInfo)
                     .then(() => {
-                        // saveUsers(userInfo?.displayName, data?.email, data?.role)
+                        saveUsers(data, userInfo?.displayName, data?.email)
                     })
                     .catch(error => {
                         console.log(error);
@@ -31,13 +33,57 @@ const Signup = () => {
                 console.log(error);
             })
     }
+
+
+    const saveUsers = (data, name, email) => {
+        const image = data.image[0];
+    const formData = new FormData();
+    formData.append('image', image);
+    const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`;
+
+    fetch(url, {
+      method: 'POST',
+      body: formData
+  })
+  .then(res => res.json())
+  .then(imgData => {
+      if(imgData.success){
+        const user = { 
+            name, 
+            email,
+            university: 'Not Set',
+            address: 'Not Set',
+            img: imgData.data.url
+        };
+        fetch('https://friendsbook-server.vercel.app/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+            })
+        }
+    })
+    }
+
+
     return (
         <div>
+            <h2 className='text-3xl'>Please Sign Up To Visit <span className='text-lime-600 font-semibold'>Friendsbook</span>...</h2>
             <form className='w-3/4 mx-auto' onSubmit={handleSubmit(handleSignUp)}>
 
                 <div className="form-control w-full">
                     <label className="label"><span className="label-text">Name</span></label>
                     <input {...register("name")} type="text" placeholder="Enter name" className="input input-bordered w-full" />
+                </div>
+
+                <div className="form-control w-full max-w-xs">
+                    <label className="label"><span className="label-text">Enter Picture</span></label>
+                    <input {...register("image")} type="file" placeholder="Enter Picture" className="input input-bordered w-full max-w-xs" />
                 </div>
 
                 <div className="form-control w-full">
@@ -52,6 +98,8 @@ const Signup = () => {
 
                 <input className='btn btn-primary w-full mt-4' value='Sign Up' type="submit" />
             </form>
+            <p>If you don't have any account, please <Link className='text-lime-600 font-semibold' to='/login'>Lonin</Link>.</p>
+
         </div>
     );
 };
